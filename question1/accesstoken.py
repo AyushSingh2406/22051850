@@ -4,7 +4,6 @@ import requests
 AUTH_URL = "http://20.244.56.144/evaluation-service/auth"
 USERS_URL = "http://20.244.56.144/evaluation-service/users"
 
-# Credentials (Replace with your actual credentials)
 auth_data = {
     "email": "22051850@kiit.ac.in",
     "name": "Ayush Singh",
@@ -13,11 +12,9 @@ auth_data = {
     "clientID": "e4c7e42e-eecd-4fbf-8ce2-facbd8c2c953",  # Replace with your generated clientID
     "clientSecret": "mWbCtyZgkEeCjzdQ"  # Replace with your generated clientSecret
 }
-
-# Step 1: Get Authentication Token
 try:
     auth_response = requests.post(AUTH_URL, json=auth_data)
-    auth_response.raise_for_status()  # Raise an error for bad status codes
+    auth_response.raise_for_status()  
 
     token_data = auth_response.json()
     access_token = token_data.get("access_token")
@@ -26,21 +23,20 @@ try:
         print("❌ Failed to get access token")
         exit()
 
-    print("✅ Access Token Obtained!")
+    print(" Access Token Obtained!")
 
 except requests.exceptions.RequestException as e:
-    print(f"❌ Error fetching token: {e}")
+    print(f" Error fetching token: {e}")
     exit()
 
-# Step 2: Fetch Users Using the Token
 headers = {"Authorization": f"Bearer {access_token}"}
 
 try:
     users_response = requests.get(USERS_URL, headers=headers)
-    users_response.raise_for_status()  # Raise an error for bad status codes
+    users_response.raise_for_status()  
 
     users = users_response.json()
-    print("✅ Users Fetched Successfully!")
+    print("Users Fetched Successfully!")
     print(users)
 
 except requests.exceptions.HTTPError as http_err:
